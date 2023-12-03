@@ -1,8 +1,11 @@
 name: Python to Android
 on:
-  push:
-    branches: ["main"]
-
+  workflow_dispatch:
+      inputs:
+        app_dir:
+          description: "Application Directory"
+          required: true
+          default: 'ML_App'
 jobs:
   # Build job. Builds app for Android with Buildozer
   build-android:
@@ -17,7 +20,7 @@ jobs:
         uses: ArtemSBulgakov/buildozer-action@v1
         id: buildozer
         with:
-          workdir: NeuralRandom
+          workdir: ${{ github.event.inputs.app_dir }}
           buildozer_version: stable
   
       - name: Upload artifacts
